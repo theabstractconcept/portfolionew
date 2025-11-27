@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Lab Assignment</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  
+
+  <style>
+    
+    :root{
+      --bg: #0f1724; /* near-black navy */
+      --card: #0b1220;
+      --muted: #98a0b3;
+      --primary: #4C6EF5; /* blue */
+      --accent: #FF6B6B; /* coral */
+      --glass: rgba(255,255,255,0.03);
+      --max-width: 1100px;
+      --radius: 14px;
+      --gap: 1.25rem;
+      --transition: 300ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{box-sizing:border-box}
+    html{font-size:16px}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg, var(--bg) 0%, #071022 100%);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:2rem 1rem;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    h1,h2,h3{margin:0 0 .6rem}
+    p{margin:0 0 1rem;color:var(--muted)}
+
+    
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:var(--gap);
+      padding:1rem 0;
+      margin-bottom:1.25rem;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:.75rem;
+    }
+
+    .logo{
+      width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));
+      display:grid;place-items:center;font-weight:700;color:white;font-size:1.05rem;box-shadow:0 6px 20px rgba(76,110,245,0.12);
+    }
+
+    nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+    nav a{padding:.5rem .75rem;border-radius:8px;color:var(--muted);font-weight:600;transition:var(--transition)}
+    nav a:hover{color:var(--primary);background:rgba(255,255,255,0.02);transform:translateY(-2px)}
+
+    
+    .btn{
+      display:inline-block;padding:.55rem .9rem;border-radius:10px;background:linear-gradient(90deg,var(--primary),#6f8bff);font-weight:700;color:white;box-shadow:0 6px 18px rgba(76,110,245,0.12);transition:var(--transition);
+    }
+    .btn:hover{transform:translateY(-4px);filter:brightness(1.05)}
+
+    
+    .hero{
+      display:flex;align-items:center;gap:2rem;padding:2rem;border-radius:var(--radius);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);
+      min-height:60vh;
+    }
+
+    .hero-left{flex:1;min-width:260px}
+    .hero-right{width:320px;flex:0 0 320px;display:flex;justify-content:center}
+
+    .eyebrow{font-weight:600;color:var(--primary);letter-spacing:.05em;margin-bottom:.6rem}
+
+    .name{font-size:clamp(2rem, 4.5vw, 3rem);line-height:1}
+
+    .role{
+      font-size:1.25rem;font-weight:700;margin-top:.5rem;display:inline-block;
+    }
+
+   
+    .role .animate {
+      padding:.12rem .35rem;border-radius:6px;display:inline-block;animation:colorChange 3s linear infinite;
+    }
+
+    @keyframes colorChange{
+      0%{color:var(--primary);text-shadow:0 6px 30px rgba(76,110,245,0.08)}
+      50%{color:var(--accent);text-shadow:0 6px 30px rgba(255,107,107,0.08)}
+      100%{color:var(--primary)}
+    }
+
+    .hero p{max-width:48ch}
+
+    .profile-pic{
+      width:260px;height:260px;border-radius:20px;background:linear-gradient(180deg,#0a1530, #0f254a);display:grid;place-items:center;font-size:1.1rem;color:var(--muted);box-shadow:0 20px 60px rgba(7,16,34,0.6);transform:translateY(0);transition:var(--transition);
+    }
+    .profile-pic img{width:92%;height:92%;object-fit:cover;border-radius:14px}
+    .profile-pic:hover{transform:translateY(-8px) rotate(-1deg)}
+
+    
+    .hero-ctas{display:flex;gap:.75rem;margin-top:1rem;align-items:center}
+
+    /* ----------------------------
+       Sections: About / Skills / Projects
+       ---------------------------- */
+    section{margin-top:2.25rem}
+    .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .section-title{font-size:1.2rem;font-weight:700}
+
+    /* Grid for skills and projects */
+    .grid{
+      display:grid;gap:1rem;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    /* Skill card */
+    .skill-card{
+      background:var(--card);padding:1rem;border-radius:12px;backdrop-filter:blur(6px);transition:var(--transition);border:1px solid rgba(255,255,255,0.02);
+    }
+    .skill-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 30px rgba(2,6,23,0.6)}
+
+    .skill-name{font-weight:700;margin-bottom:.4rem}
+    .skill-bar{height:8px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .skill-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),#86a6ff);transition:width 600ms cubic-bezier(.2,.9,.2,1)}
+
+    /* Project card */
+    .project-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.02);transition:var(--transition);}
+    .project-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+    .project-thumb{height:140px;border-radius:8px;overflow:hidden;margin-bottom:.6rem;background:linear-gradient(90deg,#07203a,#143659);display:grid;place-items:center;color:var(--muted)}
+
+    .project-meta{display:flex;justify-content:space-between;align-items:center}
+
+    /* ----------------------------
+       Contact form + Footer
+       ---------------------------- */
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:1rem}
+    .form-field{display:flex;flex-direction:column;margin-bottom:.6rem}
+    .form-field label{font-weight:600;margin-bottom:.25rem}
+    .form-field input,.form-field textarea{padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;resize:vertical}
+    .form-field textarea{min-height:140px}
+
+    footer{margin-top:2rem;padding:1rem 0;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+    
+    .reveal{opacity:0;transform:translateY(8px);animation:reveal .7s forwards;}
+    .reveal.delay{animation-delay:120ms}
+    @keyframes reveal{to{opacity:1;transform:none}}
+
+    
+    @media (max-width: 992px){
+      .hero{min-height:56vh;padding:1.5rem}
+      .hero-right{flex:0 0 260px;width:260px}
+      .profile-pic{width:220px;height:220px}
+      .contact-grid{grid-template-columns:1fr}
+    }
+    @media (max-width: 768px){
+      header{flex-direction:column;align-items:flex-start}
+      nav ul{flex-wrap:wrap}
+      .hero{flex-direction:column;align-items:flex-start}
+      .hero-right{width:100%;display:flex;justify-content:flex-end}
+      .profile-pic{width:200px;height:200px}
+      .hero{padding:1rem}
+    }
+    @media (max-width: 576px){
+      body{padding:1rem}
+      .hero-right{justify-content:center}
+      .profile-pic{width:160px;height:160px}
+      .name{font-size:1.6rem}
+      .role{font-size:1rem}
+      nav ul{gap:.5rem}
+    }
+
+
+    .muted{color:var(--muted)}
+    .stack{display:flex;gap:.5rem;flex-wrap:wrap}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="reveal">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <div style="font-weight:700">Aditi Roy (Dev)</div>
+          <div style="font-size:.8rem;color:var(--muted)">Frontend • Web • UX</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="btn" href="#projects">View Work</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero reveal delay">
+      <div class="hero-left">
+        <div class="eyebrow">Hello — I'm</div>
+        <h1 class="name">Aditi— <span class="muted">crafting interfaces</span></h1>
+        <div class="role">I build things for the web — <span class="animate">Full Stack Developer</span></div>
+        <p style="margin-top:1rem">I design and build responsive, accessible front-end experiences using modern CSS (Flexbox, Grid), thoughtful animations, and clean code. This portfolio demonstrates layout, responsive behavior, and interactive UI elements requested by the lab.</p>
+
+        <div class="hero-ctas">
+          <a class="btn" href="#contact">Hire / Contact</a>
+          <a style="padding:.55rem .9rem;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);font-weight:700;" href="#projects">See Projects</a>
+        </div>
+
+      </div>
+
+      <div class="hero-right">
+        <div class="profile-pic" title="profile image">
+<img src="prot.img.jpg" alt="profile">
+</div>
+      </div>
+    </section>
+
+   
+
+
+    <!-- About -->
+    <section id="about" class="reveal" style="margin-top:1.75rem">
+      <div class="section-head">
+        <div class="section-title">About</div>
+        <div class="muted">Focused on clean UI & responsive design</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start">
+        <div>
+          <p>I am a student developer who enjoys building sleek front-end experiences. I focus on responsive layout (Flexbox & Grid), accessible markup, and subtle animations that improve user experience without distraction. This project shows attention to scalable units, consistent color, hover effects, and transitions.</p>
+
+          <h3 style="margin-top:1rem">Education</h3>
+          <p class="muted">BSc(hons.) Cybersecurity (in progress)</p>
+
+          <h3 style="margin-top:1rem">Tooling</h3>
+          <div class="stack">
+            <span class="skill-chip muted">HTML</span>
+            <span class="skill-chip muted">CSS</span>
+            <span class="skill-chip muted">JavaScript</span>
+            <span class="skill-chip muted">Git & GitHub</span>
+          </div>
+        </div>
+
+        <div style="background:var(--glass);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
+          <div style="font-weight:700;margin-bottom:.5rem">Quick Facts</div>
+          <div class="muted">Location: India</div>
+          <div class="muted">Availability: Open to internships / remote projects</div>
+          <div class="muted">Languages: English, Hindi and Bengali</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="reveal">
+      <div class="section-head">
+        <div class="section-title">Skills</div>
+        <div class="muted">Grid layout + skill bars</div>
+      </div>
+
+      <div class="grid">
+        <!-- Skill 1 -->
+        <div class="skill-card">
+          <div class="skill-name">HTML & Semantic Markup</div>
+          <div class="muted">Readable HTML structure and accessibility-minded markup</div>
+          <div style="height:.5rem"></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%;"></div></div>
+        </div>
+
+        <!-- Skill 2 -->
+        <div class="skill-card">
+          <div class="skill-name">CSS — Flexbox & Grid</div>
+          <div class="muted">Responsive layout using modern CSS techniques</div>
+          <div style="height:.5rem"></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%;"></div></div>
+        </div>
+
+        <!-- Skill 3 -->
+        <div class="skill-card">
+          <div class="skill-name">JavaScript & DOM</div>
+          <div class="muted">Interactivity and small enhancements</div>
+          <div style="height:.5rem"></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:72%;"></div></div>
+        </div>
+
+        <!-- Skill 4 -->
+        <div class="skill-card">
+          <div class="skill-name">Design Systems & Typography</div>
+          <div class="muted">Hierarchy, scale, and consistent spacing</div>
+          <div style="height:.5rem"></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%;"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="reveal">
+      <div class="section-head">
+        <div class="section-title">Projects</div>
+        <div class="muted">Sample cards demonstrating grid + hover</div>
+      </div>
+
+      <div class="grid">
+        <!-- Project 1 -->
+        <article class="project-card">
+          <div class="project-thumb">Project Thumbnail</div>
+          <h3 style="margin-top:.6rem">Portfolio Website</h3>
+          <p class="muted">A responsive portfolio built with HTML & CSS showcasing projects and skills.</p>
+          <div class="project-meta" style="margin-top:.6rem">
+            <div class="muted">HTML • CSS</div>
+            <a class="btn" href="#">Live</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-thumb">Project Thumbnail</div>
+          <h3 style="margin-top:.6rem">Todo App</h3>
+          <p class="muted">Small interactive app to manage tasks with local storage.</p>
+          <div class="project-meta" style="margin-top:.6rem">
+            <div class="muted">JS • DOM</div>
+            <a class="btn" href="#">Live</a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <div class="project-thumb">Project Thumbnail</div>
+          <h3 style="margin-top:.6rem">Design System</h3>
+          <p class="muted">Small style guide and component library for consistent UI.</p>
+          <div class="project-meta" style="margin-top:.6rem">
+            <div class="muted">CSS • Tokens</div>
+            <a class="btn" href="#">Repo</a>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card">
+          <div class="project-thumb">Project Thumbnail</div>
+          <h3 style="margin-top:.6rem">Mini Game</h3>
+          <p class="muted">Canvas-based micro-game to show JS fundamentals.</p>
+          <div class="project-meta" style="margin-top:.6rem">
+            <div class="muted">Canvas • JS</div>
+            <a class="btn" href="#">Live</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="reveal">
+      <div class="section-head">
+        <div class="section-title">Contact</div>
+        <div class="muted">Simple front-end form (no backend)</div>
+      </div>
+
+      <div class="contact-grid">
+        <form class="form" onsubmit="event.preventDefault(); alert('Form submission is front-end only. Copy details into email or push to Netlify Forms / Formspree for backend.')">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Hi Addie, I'd like to talk about..." required></textarea>
+          </div>
+          <div style="display:flex;gap:.6rem;align-items:center">
+            <button class="btn" type="submit">Send Message</button>
+            <div class="muted">Or email: <strong style="color:var(--primary)">youremail@example.com</strong></div>
+          </div>
+        </form>
+
+        <div style="background:var(--card);padding:1rem;border-radius:12px;">
+          <h3 style="margin-bottom:.5rem">Get in touch</h3>
+          <p class="muted">I'm open to internships and collaborations. Mention where you saw my portfolio and any timelines.</p>
+
+          <div style="margin-top:1rem">
+            <div style="font-weight:700">Social</div>
+            <div class="muted" style="margin-top:.5rem">GitHub / LinkedIn / Behance</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="reveal">
+      <div>&copy; <span id="year"></span> Aditi — Built with HTML & CSS</div>
+      <div class="muted">Made for Lab: Flexbox, Grid, Responsive, Animations</div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('.reveal').forEach((el,i)=> el.style.animationDelay = (i*80) + 'ms');
+  </script>
+</body>
+</html>
